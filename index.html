@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>interaktywna mapa samotności</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<style type="text/css">
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			border: 1px solid #bbb;
+			padding: 1px 5px;
+		}
+		th {
+			background-color: #f2f2f2;
+			text-align: center;
+			white-space: pre-line;
+		}
+		.sex-ratio td:nth-child(1) {
+			text-align: center;
+			width: 20%;
+		}
+		.sex-ratio td:nth-child(2), .sex-ratio td:nth-child(3) {
+			text-align: right;
+			width: 40%;
+		}
+		.two td {
+			text-align: right;
+			width: 50%;
+		}
+		.name {
+			font-weight: bold;
+		}
+		.title {
+			font-weight: bold;
+			font-size: large;
+		}
+		.data-selector {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			background: white;
+			padding: 10px;
+			border: 1px solid #000;
+			border-radius: 10px;
+			z-index: 1000;
+		}
+		.wrapper {
+			position: absolute;
+			align-items: flex-end;
+			bottom: 20px;
+			left: 20px;
+			display: flex;
+			flex-direction: row;
+			z-index: 999;
+		}
+		.legend-wrapper {
+			background: white;
+			padding-left: 10px;
+			padding-right: 10px;
+			border: 1px solid #000;
+			border-radius: 10px;
+			z-index: 1000;
+			font-size: 14px;
+		}
+		.grades-selector {
+			margin-top: 0;
+			margin-bottom: 10px;
+			bottom: 0;
+		}
+		.legend .legend-item {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+		}
+		.legend .legend-color {
+			width: 20px;
+			height: 20px;
+			margin-right: 10px;
+			border: 1px solid #ccc;
+		}
+		.legend .legend-description {
+			font-weight: bold;
+			text-align: center;
+			margin: 10px;
+		}
+		.range-filters {
+			margin-left: 10px;
+			bottom: 0;
+			background: white;
+			padding: 10px;
+			border: 1px solid #000;
+			border-radius: 10px;
+			z-index: 1000;
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	<div class="data-selector">
+		<select id="dataset-select">
+			<option value="sex-ratio" selected="selected">Liczba kobiet przypadająca na 100 mężczyzn</option>
+			<option value="unmarried-ratio">Liczba panien przypadająca na 100 kawalerów</option>
+			<option value="higher-education-ratio">Liczba kobiet z wyższym wykształceniem na 100 mężczyzn z wyższym wykształceniem</option>
+		</select>
+		<div id="dataset-options"></div>
+	</div>
+	<div class="wrapper">
+		<div class="legend-wrapper">	
+			<div class="grades-selector" style="margin-top: 10px;">
+				kolory:
+				<select id="grades">
+					<option value="-1">2 poziomy</option>
+					<option value="-2" selected="selected">4 poziomy</option>
+					<option value="-4">8 poziomów</option>
+					<option value="-5">10 poziomów</option>
+					<option value="4">kwartyle</option>
+					<option value="10">decyle</option>
+				</select>
+			</div>
+			<div id="legend" class="legend"></div>
+		</div>
+		<div id="range-filters" class="range-filters">
+			Pokazuj <span id="element-counter"></span> <span id="powiat">powiaty</span> z wartościami
+			<input type="number" id="min-range" step="1" size="3" min="0"> – <input type="number" id="max-range" step="1" size="3">
+		</div>
+	</div>
+	<script src="scripts.js"></script>
+</body>
+</html>
