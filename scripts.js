@@ -1,7 +1,7 @@
 const map = L.map("map").fitBounds([ [54.836, 18.300],[49.002, 22.859],[50.868, 24.145],[52.837, 14.122]  ]);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-	attribution: 'dane geograficzne: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | dane statystyczne: &copy; <a href="https://bdl.stat.gov.pl/">Główny Urząd Statystyczny</a>'
+	attribution: 'dane geograficzne: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | dane statystyczne: &copy; <a href="https://bdl.stat.gov.pl/"><abbr title="Główny Urząd Statystyczny">GUS</abbr></a>'
 }).addTo(map);
 
 let currentLayer;
