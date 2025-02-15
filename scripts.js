@@ -266,8 +266,12 @@ function visualizeSexRatio() {
 	});
 }
 
-function visualizeRatio(csvFile, description, reversed_description, oneF="kobieta", fewF="kobiety", manyF="kobiet", oneM="mężczyzna", fewM="mężczyźni", manyM="mężczyzn") {
-	document.getElementById("dataset-options").innerHTML = "";
+function visualizeRatio(csvFile, description, reversed_description, showDescription, oneF="kobieta", fewF="kobiety", manyF="kobiet", oneM="mężczyzna", fewM="mężczyźni", manyM="mężczyzn") {
+	if (showDescription) {
+		document.getElementById("dataset-options").innerHTML = description;
+	} else {
+		document.getElementById("dataset-options").innerHTML = "";
+	}
 	Promise.all([
 		d3.json("powiaty.geojson"),
 		d3.csv(csvFile)
@@ -465,8 +469,8 @@ function updateLegend(grades, colors, description = "Zakresy", counter = 0) {
 document.getElementById("dataset-select").addEventListener("change", (e) => {
 	const selectedOption = e.target.value;
 	if (selectedOption === "sex-ratio") visualizeSexRatio();
-	else if (selectedOption === "unmarried-ratio") visualizeRatio("P4286.csv", "Liczba panien na 100 kawalerów", "Liczba kawalerów na 100 panien", "panna", "panny", "panien", "kawaler", "kawalerowie", "kawalerów");
-	else if (selectedOption === "higher-education-ratio") visualizeRatio("P4315.csv", "Liczba kobiet z wyższym wykształceniem na 100 mężczyzn z wyższym wykształceniem", "Liczba mężczyzn z wyższym wykształceniem na 100 kobiet z wyższym wykształceniem");
+	else if (selectedOption === "unmarried-ratio") visualizeRatio("P4286.csv", "Liczba panien na 100 kawalerów", "Liczba kawalerów na 100 panien", false, "panna", "panny", "panien", "kawaler", "kawalerowie", "kawalerów");
+	else if (selectedOption === "higher-education-ratio") visualizeRatio("P4315.csv", "Liczba kobiet z wyższym wykształceniem na 100 mężczyzn z wyższym wykształceniem", "Liczba mężczyzn z wyższym wykształceniem na 100 kobiet z wyższym wykształceniem", true);
 });
 
 visualizeSexRatio();
